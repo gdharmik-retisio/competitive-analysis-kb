@@ -1,0 +1,20 @@
+{
+  "name": "competitive-analysis-kb-server",
+  "version": "1.0.0",
+  "description": "API server for competitive-analysis-kb",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@neo4j/graphql": "^3.11.0",
+    "apollo-server": "^3.10.3",
+    "dotenv": "^16.0.3",
+    "graphql": "^16.6.0",
+    "neo4j-driver": "^5.1.0",
+    "nodemon": "^2.0.20"
+  }
+}
