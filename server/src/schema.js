@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
 
@@ -13,7 +13,7 @@ type Target {
    description:String
    updatedOn:String
    updatedBy:User
-   KPI:KPI @relationship(type: "HAS-GOAL", direction: IN)
+   KPI:KPI @relationship(type: "HAS_GOAL", direction: IN)
 }
 
 type Objective {
@@ -33,7 +33,7 @@ type KPI {
    description:String
    updatedOn:String
    updatedBy:User
-   target: Target @relationship(type:"HAS-GOAL", direction:OUT)
+   target: Target @relationship(type:"HAS_GOAL", direction:OUT)
    metric: Metric @relationship(type: "MEASURES", direction:IN)
    objectives:[Objective!]! @relationship(type:"DRIVES", direction:IN)
 }
@@ -65,8 +65,8 @@ type Industry {
    description:String
    updatedOn:String
    updatedBy:User
-   parentIndustries:[Industry!]! @relationship(type:"PARENT-INDUSTRY", direction:OUT)
-   childIndustries:[Industry!]! @relationship(type:"CHILD-INDUSTRY", direction:IN)
+   parentIndustries:[Industry!]! @relationship(type:"PARENT_INDUSTRY", direction:OUT)
+   childIndustries:[Industry!]! @relationship(type:"CHILD_INDUSTRY", direction:IN)
 }
 
 
@@ -77,8 +77,8 @@ type Domain {
    description:String
    updatedOn:String
    updatedBy:User
-   parentDomains:[Domain!]! @relationship(type:"PARENT-DOMAIN", direction:OUT)
-   childDomains:[Domain!]! @relationship(type:"CHILD-DOMAIN", direction:IN)
+   parentDomains:[Domain!]! @relationship(type:"PARENT_DOMAIN", direction:OUT)
+   childDomains:[Domain!]! @relationship(type:"CHILD_DOMAIN", direction:IN)
 }
 
 enum OfferingType {
@@ -89,17 +89,17 @@ enum OfferingType {
 }
 
 type Offering {
-   id:ID! @unique
+   id:ID!  @unique
    code:String
    name:String
    description:String
    updatedOn:String
    updatedBy:User
    offeringtype: OfferingType
-   parentOfferings:[Offering!]! @relationship(type:"PARENT-OFFERING", direction:OUT)
-   childOfferings:[Offering!]! @relationship(type:"CHILD-OFFERING", direction:IN)
+   parentOfferings:[Offering!]! @relationship(type:"PARENT_OFFERING", direction:OUT)
+   childOfferings:[Offering!]! @relationship(type:"CHILD_OFFERING", direction:IN)
    features:[Feature!]! @relationship(type:"PROVIDES", direction:OUT)
-   #provider: Industry  @relationship(type:"PROVIDES", direction:IN)
+   #provider: Company  @relationship(type:"PROVIDES", direction:IN)
    objectives: [Objective!]! @relationship(type:"SATISFIES", direction:OUT)
    #capabilites:[Capability] @relationship(type:"")
 }
@@ -110,8 +110,8 @@ type Capability {
    description:String
    updatedOn:String
    updatedBy:User
-   parentCapabilities:[Capability!]! @relationship(type:"PARENT-CAPABILITY", direction:OUT)
-   childCapabilities:[Capability!]! @relationship(type:"CHILD-CAPABILITY", direction:IN)
+   parentCapabilities:[Capability!]! @relationship(type:"PARENT_CAPABILITY", direction:OUT)
+   childCapabilities:[Capability!]! @relationship(type:"CHILD_CAPABILITY", direction:IN)
    domains: [Domain!]! @relationship(type:"SUPPORTS", direction:OUT)
 }
 
@@ -122,7 +122,7 @@ type Feature {
    updatedOn:String
    updatedBy:User
    satisfies: Requirement @relationship(type:"SATISFIES", direction:OUT)
-   metrics:[Metric!]! @relationship(type:"MEASURED-BY", direction:OUT)
+   metrics:[Metric!]! @relationship(type:"MEASURED_BY", direction:OUT)
    objectives:[Objective!]! @relationship(type:"ENABLES", direction:OUT)
    demoLinkInternal:String
    demoLink:String
@@ -137,8 +137,8 @@ type Requirement {
    description:String
    updatedOn:String
    updatedBy:User
-   parentRequirements:[Requirement!]! @relationship(type:"PARENT-REQUIREMENT", direction:OUT)
-   childRequirements:[Requirement!]! @relationship(type:"CHILD-REQUIREMENT", direction:IN)
+   parentRequirements:[Requirement!]! @relationship(type:"PARENT_REQUIREMENT", direction:OUT)
+   childRequirements:[Requirement!]! @relationship(type:"CHILD_REQUIREMENT", direction:IN)
 }`
 
 module.exports = { typeDefs };

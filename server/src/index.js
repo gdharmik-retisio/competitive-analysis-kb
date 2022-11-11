@@ -1,14 +1,14 @@
-const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer } = require("apollo-server");
 const neo4j = require("neo4j-driver");
 const { Neo4jGraphQL } = require("@neo4j/graphql");
 const dotenv = require("dotenv");
 const { typeDefs } = require("./schema")
-const express = require("express")
+
 
 // set environment variables from .env
 dotenv.config()
 
-const app = express()
+
 
 /*
  * Create a Neo4j driver instance to connect to the database
@@ -38,7 +38,7 @@ const neoSchema = new Neo4jGraphQL({ typeDefs, driver })
  * instance into the context object so it is available in the
  * generated resolvers to connect to the database.
  */
-neoSchema.getSchema().then(async (schema) => {
+neoSchema.getSchema().then((schema) => {
     const server = new ApolloServer({
         context: {
             driver,
@@ -49,19 +49,7 @@ neoSchema.getSchema().then(async (schema) => {
         playground: true,
     })
 
-    // Specify host, port and path for GraphQL endpoint
-    const port = process.env.GRAPHQL_SERVER_PORT || 4001
-    const path = process.env.GRAPHQL_SERVER_PATH || '/graphql'
-    const host = process.env.GRAPHQL_SERVER_HOST || '0.0.0.0'
-
-    await server.start()
-    /*
-     * Optionally, apply Express middleware for authentication, etc
-     * This also also allows us to specify a path for the GraphQL endpoint
-     */
-    server.applyMiddleware({ app, path })
-
-    app.listen({ host, port, path }, () => {
-        console.log(`GraphQL server ready at http://${host}:${port}${path}`)
+    server.listen().then(({ url }) => {
+        console.log(`GraphQL server ready at ${url}`)
     })
 })
